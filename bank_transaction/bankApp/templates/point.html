@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Account ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Total Point</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for point in points %}
+          <tr>
+            <th scope="row">{{point.account_id}}</th>
+            <td>{{point.name}}</td>
+            <td>{{point.point}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock content %}

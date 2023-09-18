@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+      <form action="{% url 'nasabah' %}" method="POST">
+        {% csrf_token %}
+          <label for="id">ID</label>
+            {{ form.account_id }}
+            
+            <label for="nama">Nama</label>
+            {{ form.name }}
+          <input type="submit" value="Tambah">
+      </form>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Account ID</th>
+        <th scope="col">Nama Nasabah</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for account in accounts %}
+      <tr>
+        <th scope="row">{{account.account_id}}</th>
+        <td>{{account.name}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

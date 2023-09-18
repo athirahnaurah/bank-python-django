@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <form action="{% url 'report' %}" method="POST">
+        {% csrf_token %}
+        <div class="row mb-3">
+          <label for="inputId3" class="col-sm-2 col-form-label">Account ID</label>
+          {{ form.account }}
+        </div>
+        <div class="row mb-3">
+          <label for="inputStart" class="col-sm-2 col-form-label">Start</label>
+          {{form.StartDate}}
+        </div>
+        <div class="row mb-3">
+          <label for="inputStart" class="col-sm-2 col-form-label">End</label>
+          {{form.EndDate}}
+        </div>
+        <input type="submit" value="Cari">
+      </form>
+    {% if transactions %}
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Transaction Date</th>
+              <th scope="col">Description</th>
+              <th scope="col">Credit</th>
+              <th scope="col">Debit</th>
+              <th scope="col">Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for t in transactions %}
+            <tr>
+              <td scope="row">{{t.date}}</td>
+              <td>{{t.description}}</td>
+              <td>
+                {% if t.status == 'C' %}
+                    {{t.amount}}
+                {% else %}
+                    -
+                {% endif %}
+              </td>
+              <td>
+                {% if t.status == 'D' %}
+                    {{t.amount}}
+                {% else %}
+                    -
+                {% endif %}
+              </td>
+              <td>{{t.balance}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+          <p>Tidak ada transaksi yang ditemukan.</p>
+        {% endif %}
+</div>
+{% endblock content %}

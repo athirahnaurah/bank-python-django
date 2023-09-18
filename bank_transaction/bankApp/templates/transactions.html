@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <form action="{% url 'transaksi' %}" method="POST">
+        {% csrf_token %}
+        <div class="row mb-3">
+          <label for="inputId3" class="col-sm-2 col-form-label">ID</label>
+          {{ form.account }}
+        </div>
+        <div class="row mb-3">
+          <label for="inputPassword3" class="col-sm-2 col-form-label">Tanggal</label>
+          {{form.transaction_date}}
+          <!-- <div class="col-sm-10">
+            <input type="datetime-local" class="form-control" id="date" name="transaction_date" value="{{ form.transaction_date }}">
+          </div> -->
+        </div>
+       <div class="row mb-3">
+          {{form.description}}
+       </div>
+       <div class="row mb-3">
+          {{form.debit_credit_status}}
+        </div>
+        <div class="row mb-3">
+            <label for="inputAmmount" class="col-sm-2 col-form-label">Nominal Transaksi</label>
+            {{form.amount}}
+          </div>
+          <input type="submit" value="Tambah">
+      </form>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Account ID</th>
+            <th scope="col">Tanggal Transaksi</th>
+            <th scope="col">Deskripsi</th>
+            <th scope="col">Debit Credit Status</th>
+            <th scope="col">Jumlah</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in transactions %}
+          <tr>
+            <th scope="row">{{t.account_id}}</th>
+            <td>{{t.transaction_date}}</td>
+            <td>{{t.description}}</td>
+            <td>
+                {% if t.debit_credit_status == 'C' %}
+                    Credit
+                {% else %}
+                    Debit
+                {% endif %}
+            </td>
+            <td>{{t.amount}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',  // Sesuaikan dengan format yang Anda inginkan
+                autoclose: true
+            });
+        });
+      </script>
+</div>
+{% endblock content %}
